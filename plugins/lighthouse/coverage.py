@@ -556,8 +556,11 @@ class DatabaseCoverage(object):
                 # to this NodeCoverage and mark the instruction as mapped by
                 # discarding its address from the unmapped data list
                 #
-
-                node_coverage.executed_instructions[address] = self._hitmap[address]
+                if address ==node_metadata.address:
+                    for i in node_metadata.instructions.keys():
+                        node_coverage.executed_instructions[i] = self._hitmap[address]
+                else:
+                    node_coverage.executed_instructions[address] = self._hitmap[address]
                 self._unmapped_data.discard(address)
 
                 # get the next address to attempt mapping on
